@@ -24,8 +24,6 @@ function [x, v] = heunSchwarm(tspan, x0, v0, params)
     
     for i = 1:iters
         dxvdt = sysDiffGlgen(x(:,:), v(:,:), params);
-        % TODO mit neuer implementation von explEulSchwarm kompatibel
-        % machen
         [x_tilde, v_tilde] = explEulSchwarm_1Iter(t_delta, x(:,:), v(:,:), params);
         dxvdt_tilde = sysDiffGlgen(x_tilde, v_tilde, params);
         

@@ -24,16 +24,11 @@ function [x, v] = heunSchwarm_AlleIter(tspan, x0, v0, params)
     
     for i = 1:iters
         dxvdt = sysDiffGlgen(x(:,:,i), v(:,:,i), params);
-        % TODO mit neuer implementation von explEulSchwarm kompatibel
-        % machen
         [x_tilde, v_tilde] = explEulSchwarm_1Iter(t_delta, x(:,:,i), v(:,:,i), params);
         dxvdt_tilde = sysDiffGlgen(x_tilde, v_tilde, params);
         
-        % TODO an neue formel anpassen!
         xv = [x(:,:,i), v(:,:,i)] + 0.5 * t_delta * (dxvdt + dxvdt_tilde);
         x(:,:,i+1) = xv(:, 1:2);
         v(:,:,i+1) = xv(:, 3:4);
     end
-    % TODO diese Funktion alle Positionen und Geschwindigkeiten über die
-    % Zeit ausgeben lassen
 end

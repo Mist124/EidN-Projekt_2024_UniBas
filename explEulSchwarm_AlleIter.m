@@ -17,11 +17,11 @@ function [x, v] = explEulSchwarm_AlleIter(tspan, x0, v0, params)
     T_end = tspan(2);
     t_delta = tspan(3);
     iters = my_utils.time2idx(tspan, T_end)-1;
-
     x = zeros([size(x0), iters + 1]);
     v = x;
     x(:,:,1) = x0;
     v(:,:,1) = v0;
+    
     for i = 1:iters
         [x_next, v_next] = explEulSchwarm_1Iter(t_delta,x(:,:,i), v(:,:,i), params);
         x(:,:,i+1) = x_next;

@@ -8,8 +8,8 @@ params.sigma = 1;
 params.beta = 1;
 tspan = [0,10,0.05];
 figure();
-[xs_eul, vs_eul] = explEulSchwarm_AlleIter(tspan, x0, v0, params);
-[xs_heun, vs_heun] = heunSchwarm_AlleIter(tspan, x0, v0, params);
+[xs_eul, vs_eul] = explEulSchwarm(tspan, x0, v0, params, true, true);
+[xs_heun, vs_heun] = heunSchwarm(tspan, x0, v0, params, true, true);
 
 for i = 1:8
     t = ((i-1)/7.0)^5 * (tspan(2) - tspan(1)) + tspan(1); % in tspan

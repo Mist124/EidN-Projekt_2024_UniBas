@@ -1,4 +1,4 @@
-function [x, v] = explEulSchwarm(tspan, x0, v0, params)
+function [x, v] = explEulSchwarm(tspan, x0, v0, params, verlauf_speichern, fortschritt_anzeigen)
 %EXPLEULSCHWARM gibt zwei 3-dimensionale Arrays zurück; 
 %Die Positionen (x) und Geschwindigkeiten (v) über die Zeit des Schwarmes
 %generiert durch das explizite Eulerverfahren.
@@ -6,26 +6,7 @@ function [x, v] = explEulSchwarm(tspan, x0, v0, params)
 %   die Anzahl Iterationen + 1 sind
 %   x(:,:,1) = x0, v(:,:,1) = v0
 
-    arguments
-        tspan (1, 3) {mustBeNumeric}
-        x0 (:, 2) {mustBeNumeric}
-        v0 (:, 2) {mustBeNumeric}
-        params
-    end
-    
-    T_init = tspan(1);
-    T_end = tspan(2);
-    t_delta = tspan(3);
-    iters = my_utils.time2idx(tspan, T_end)-1;
-    x = zeros(size(x0));
-    v = x;
-    x(:,:) = x0;
-    v(:,:) = v0;
-    
-    for i = 1:iters
-        [x_next, v_next] = explEulSchwarm_1Iter(t_delta,x(:,:), v(:,:), params);
-        x(:,:) = x_next;
-        v(:,:) = v_next;
-    end
+    iterFktn = @(t_delta, x_init, v_init) explEulSchwarm_1Iter(t_delta, x_init, v_init, params);
+    [x, v] = schwarmIterierer(iterFktn, tspan, x0, v0, verlauf_speichern, fortschritt_anzeigen);
 end
 

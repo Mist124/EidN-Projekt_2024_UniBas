@@ -16,14 +16,15 @@ function [x, v] = schwarmIterierer(iterFktn, tspan, x0, v0, verlauf_speichern, f
     iters = my_utils.time2idx(tspan, T_end)-1;
 
     step = int64(iters/100);
-
+    
+    mat_size = size(x0);
     if verlauf_speichern
-        x = zeros([size(x0), iters + 1]);
-        v = x;
-    else
-        x = zeros(size(x0));
-        v = x;
+        mat_size(3) = iters + 1;
     end
+    
+    x = zeros(mat_size);
+    v = x;
+
     x(:,:,1) = x0;
     v(:,:,1) = v0;
 
@@ -35,12 +36,14 @@ function [x, v] = schwarmIterierer(iterFktn, tspan, x0, v0, verlauf_speichern, f
             fprintf(repmat('\b', 1, lastMsgLen));
             lastMsgLen = fprintf("%s", num2str((i*100)/iters) + "%");
         end
-        [x_next, v_next] = iterFktn(t_delta,x(:,:,(i-1)*cond_int + 1), v(:,:,(i-1)*cond_int + 1));
-        x(:,:,i*cond_int + 1) = x_next;
-        v(:,:,i*cond_int + 1) = v_next;
+        prev_idx = (i-1) * cond_int + 1; % ist 1 wenn verlauf_speichern false ist, ansonsten i
+        next_idx =    i  * cond_int + 1; % ist 1 wenn verlauf_speichern false ist, ansonsten i+1
+        [x_next, v_next] = iterFktn(t_delta, x(:,:,prev_idx), v(:,:,prev_idx));
+        x(:, :, next_idx) = x_next;
+        v(:, :, next_idx) = v_next;
     end
-    
-    if fortschritt_anzeigen && lastMsgLen ~= 0
+
+    if lastMsgLen ~= 0
         fprintf("\n");
     end
 end

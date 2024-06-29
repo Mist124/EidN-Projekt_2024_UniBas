@@ -13,7 +13,7 @@ figure();
 [xs_heun, vs_heun] = heunSchwarm(tspan, x0, v0, params, true, true);
 
 for i = 1:8
-    % t ist in tspan, mehr Werte in der Nähe vom Anfang des Zeitintervalls.
+    % t ist in tspan, mehr Werte in der Nähe vom Anfang des Zeitintervalls, da dort mehr passiert.
     t = (i/8.0)^4 * (tspan(2) - tspan(1)) + tspan(1);
     idx = my_utils.time2idx(tspan,t);
     actual_t = my_utils.idx2time(tspan, idx);
@@ -22,18 +22,18 @@ for i = 1:8
     x = xs_eul(:,:,idx);
     v = vs_eul(:,:,idx);
     quiver(x(:, 1), x(:, 2), v(:, 1), v(:, 2), "Marker",".");
-    title("Euler: t=" + num2str(actual_t,3));
-    axis([-10,10,-10,10]);
+    title("Euler: $t=" + num2str(actual_t,3)+"$", "Interpreter","latex", "FontSize",12);
+    axis([-7,7,-7,7]);
 
     subplot(4, 4, i+8);
     x = xs_heun(:,:,idx);
     v = vs_heun(:,:,idx);
     quiver(x(:, 1), x(:, 2), v(:, 1), v(:, 2), "Marker",".");
-    title("Heun: t=" + num2str(actual_t,3));
-    axis([-10,10,-10,10]);
+    title("Heun: $t=" + num2str(actual_t,3)+"$", "Interpreter","latex", "FontSize",12);
+    axis([-7,7,-7,7]);
 end
 
-sgtitle("Schwarmsimulation mit Heun- und exp. Euler-Verf.: $K = 10, \sigma = \beta = 1, N = 50$", "interpreter", "latex")
+sgtitle("Schwarmsimulation mit Heun- und exp. Euler-Verf.: $K = 1, \sigma = \beta = 1, N = 50$", "interpreter", "latex", "FontSize", 15)
 
 %% ===== Video rendern =====
 % diese Sektion muss nach der ersten ausgeführt werden. 

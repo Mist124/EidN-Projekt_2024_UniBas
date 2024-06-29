@@ -5,8 +5,8 @@ N = 20;
 x0 = (rand(N, 2) - .5) * 10;
 v0 = (rand(N, 2) - .5) * 2;
 params.K = 1;
-params.sigma = 2;
-params.beta = 4;
+params.sigma = 1;
+params.beta = 1;
 tspan = [0,1,10^-6];
 [x_ref, v_ref] = heunSchwarm(tspan, x0, v0, params, false, true);
 

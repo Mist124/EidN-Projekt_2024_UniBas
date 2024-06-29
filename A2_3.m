@@ -17,8 +17,8 @@ rng(seed)
 rng(seed)
 [bestX_20, bestFx_20, xHist_20, bHist_20] = PSO(@shubert, gebiet, setfield(params, "c_s", 0));
 
-[X_l, Y_l] = meshgrid(gebiet(1):0.1:gebiet(2), gebiet(3):0.1:gebiet(4));
-Z_l = arrayfun(@(x, y) shubert([x, y]), X_l, Y_l);
+[X_s, Y_s] = meshgrid(gebiet(1):0.1:gebiet(2), gebiet(3):0.1:gebiet(4));
+Z_s = arrayfun(@(x, y) shubert([x, y]), X_s, Y_s);
 
 f = figure();
 for i = 1:4
@@ -26,7 +26,7 @@ for i = 1:4
 
     subplot(3, 4, i);
     hold on;
-    contour(X_l, Y_l, Z_l);
+    contour(X_s, Y_s, Z_s);
     plot(xHist_22(:,1,t), xHist_22(:,2,t), ".");
     plot(bHist_22(1,t), bHist_22(2,t), "*");
 
@@ -36,7 +36,7 @@ for i = 1:4
 
     subplot(3, 4, i+4);
     hold on;
-    contour(X_l, Y_l, Z_l);
+    contour(X_s, Y_s, Z_s);
     plot(xHist_02(:,1,t), xHist_02(:,2,t), ".");
     plot(bHist_02(1,t), bHist_02(2,t), "*");
 
@@ -46,7 +46,7 @@ for i = 1:4
 
     subplot(3, 4, i+8);
     hold on;
-    contour(X_l, Y_l, Z_l);
+    contour(X_s, Y_s, Z_s);
     plot(xHist_20(:,1,t), xHist_20(:,2,t), ".");
     plot(bHist_20(1,t), bHist_20(2,t), "*");
 

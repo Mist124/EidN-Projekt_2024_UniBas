@@ -1,5 +1,6 @@
 /videos
 *.mp4
+test.m
 
 # the following patterns are from https://github.com/github/gitignore/blob/main/Global/MATLAB.gitignore
 # Windows default autosave extension

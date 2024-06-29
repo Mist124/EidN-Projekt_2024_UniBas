@@ -28,7 +28,8 @@ function A_x = adjacencyMatrix(x, params)
     %norm_2 = @(coord1, coord2) sqrt(coord1.^2 + coord2.^2);
     diff_coord1 = x(:, 1) - x(:, 1).';
     diff_coord2 = x(:, 2) - x(:, 2).';
-    eta = @(y) (params.K ./ (params.sigma^2 + y).^params.beta);
+    eta = @(y) (params.K ./ ((params.sigma^2 + y).^params.beta));
     diff = cat(3, diff_coord1, diff_coord2);
-    A_x = eta(vecnorm(diff, 2, 3));
+    A_x = eta(vecnorm(diff, 2, 3)); % vielleicht sollte man die Norm noch quadrieren?
+    %A_x = eta(norm_2(diff_coord1, diff_coord2));
 end

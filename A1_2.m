@@ -41,8 +41,8 @@ c_quad = err_Heun(3) / xs_ref(2)^2 ... %   /
     * 1.15; % <---------------------------/
 
 loglog(delta_ts, [err_ExpEul, err_Heun], "-*", xs_ref, [c_lin*xs_ref, c_quad*xs_ref.^2], "--");
-title("Vergleich Explizites Euler- und Heunverfahren")
-legend("Fehler ExpEul", "Fehler Heun", "vgl.Gerade dt", "vgl.Gerade dt^2", "Location", "southeast");
-xlabel("dt")
-ylabel("Norm des Fehlers")
+title("Vergleich Explizites Euler- und Heunverfahren", "Interpreter","latex", "FontSize",15)
+legend("Fehler exp.Euler", "Fehler Heun", "vgl.Gerade $\Delta t$", "vgl.Gerade $\Delta t^2$", "Location", "southeast", "interpreter", "latex", "FontSize",12);
+xlabel("$\Delta t$", "Interpreter","latex", "FontSize",13)
+ylabel("Norm des Fehlers", "Interpreter","latex", "FontSize",13)
 

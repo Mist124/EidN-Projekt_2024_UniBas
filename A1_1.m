@@ -7,34 +7,37 @@ params.K = 1;
 params.sigma = 1;
 params.beta = 1;
 tspan = [0,10,0.05];
+rng(212)
 figure();
 [xs_eul, vs_eul] = explEulSchwarm(tspan, x0, v0, params, true, true);
 [xs_heun, vs_heun] = heunSchwarm(tspan, x0, v0, params, true, true);
 
 for i = 1:8
-    % t ist in tspan, mehr Werte in der nähe vom Anfang des Zeitintervalls.
-    t = ((i-1)/7.0)^5 * (tspan(2) - tspan(1)) + tspan(1);
+    % t ist in tspan, mehr Werte in der Nähe vom Anfang des Zeitintervalls.
+    t = (i/8.0)^4 * (tspan(2) - tspan(1)) + tspan(1);
     idx = my_utils.time2idx(tspan,t);
+    actual_t = my_utils.idx2time(tspan, idx);
 
     subplot(4, 4, i);
     x = xs_eul(:,:,idx);
     v = vs_eul(:,:,idx);
     quiver(x(:, 1), x(:, 2), v(:, 1), v(:, 2), "Marker",".");
-    title("Euler: t=" + num2str(t,3));
-    axis([-6,6,-6,6]);
+    title("Euler: t=" + num2str(actual_t,3));
+    axis([-10,10,-10,10]);
 
     subplot(4, 4, i+8);
     x = xs_heun(:,:,idx);
     v = vs_heun(:,:,idx);
     quiver(x(:, 1), x(:, 2), v(:, 1), v(:, 2), "Marker",".");
-    title("Heun: t=" + num2str(t * tspan(2),3));
-    axis([-6,6,-6,6]);
+    title("Heun: t=" + num2str(actual_t,3));
+    axis([-10,10,-10,10]);
 end
 
+sgtitle("Schwarmsimulation mit Heun- und exp. Euler-Verf.: $K = 10, \sigma = \beta = 1, N = 50$", "interpreter", "latex")
 
 %% ===== Video rendern =====
 % diese Sektion muss nach der ersten ausgeführt werden. 
-my_utils.renderVideoOfQuiver(tspan, "videos/vergleichsVideo", [2000, 600], 30, ...
+my_utils.renderVideoOfQuiver(tspan, "videos/vergleichsVideo", [2000, 600], 10, ...
     xs_eul, vs_eul, "Euler", ...
     xs_heun, vs_heun, "Heun", ...
     (xs_heun + xs_eul)./2, vs_heun - vs_eul, "Unterschied");

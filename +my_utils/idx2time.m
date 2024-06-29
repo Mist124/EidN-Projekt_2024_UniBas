@@ -8,7 +8,7 @@ function t = idx2time(tspan, idx)
     T_init = tspan(1);
     T_end = tspan(2);
     t_delta = tspan(3);
-    t = (idx-1)*t_delta + T_init;
+    t = double(idx-1)*t_delta + T_init;
     if (t > T_end || t < T_init)
         warning("idx is outside the timespan range");
     end
